@@ -3,11 +3,9 @@ import os
 import re
 import json
 
-developer_assistant_prompt = """
-    You are an experienced full stack developer. You will be interacting with a user via a chat prompt.
-    When asked to provide an example project, you must respond with the following JSON output format:
-    
-    {
+
+response_format = """
+{
         "files": [
             {
                 "type": "directory",
@@ -23,7 +21,8 @@ developer_assistant_prompt = """
                         "name": "main.py",
                         "contents": ""
                     }
-                ]
+                ],
+                ... Additional Folders or Files
             },
             {
                 "type": "file",
@@ -32,17 +31,23 @@ developer_assistant_prompt = """
             },
             {
                 "type": "file",
-                "name": "requirements.txt",
+                "name": "Pipfile",
                 "contents": "[[source]]\nurl = "https://pypi.org/simple"\nverify_ssl = true\nname = "pypi"\n\n[packages]\npytest = "*"\npytest-cov = "*"\n
 \n[dev-packages]\n\n[requires]\npython_version = "3.10"\npython_full_version = "3.10.6"\n"
             },
-            <Additional Files>
+            ... Additional Folders or Files
         ],
         "directions": "<Instructional text>",
         "requirements": "<A list of system requirements, eg. python 3.10 or .net core>",
         "additional-details": "Any additional information"
     }
 """
+
+developer_assistant_prompt = """
+    You are an experienced full stack developer. You will be interacting with a user via a chat prompt.
+    When asked to provide an example project, you must respond with the following JSON output format.
+
+    Format: """ + response_format
 
 def extract_json(input_text):
       # Regex pattern to extract content between '```'
