@@ -117,7 +117,7 @@ def chat_with_gpt3():
         json_content = extract_json(content)
 
         print("Creating Folders and files")
-        create_files_from_json(json_content)
+        create_files_from_json(json_content, 'sandbox')
 
 
         #files = content["files"]
